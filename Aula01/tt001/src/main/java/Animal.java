@@ -1,3 +1,6 @@
+
+import java.util.concurrent.atomic.AtomicInteger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,13 +12,14 @@
  * @author Smoow
  */
 public class Animal {
+    private static final AtomicInteger count = new AtomicInteger(0); 
     private final int id;
     private String nome;
     private int idade;
     private int sexo;  // 0 - macho | 1 - femea
 
-    public Animal(int id, String nome, int idade, int sexo) {
-        this.id = id;
+    public Animal(String nome, int idade, int sexo) {
+        id = count.incrementAndGet(); 
         this.nome = nome;
         this.idade = idade;
         this.sexo = sexo;

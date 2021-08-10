@@ -1,12 +1,14 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author Smoow
  **/
 public class Cliente {
+    private static final AtomicInteger count = new AtomicInteger(0); 
     private final int id;
     private String nome;
     private String endereco;
@@ -16,8 +18,8 @@ public class Cliente {
     
     private List<Animal> animais;
 
-    public Cliente(int id, String nome, String endereco, String telefone, String cep, String email) {
-        this.id = id;
+    public Cliente(String nome, String endereco, String telefone, String cep, String email) {
+        id = count.incrementAndGet(); 
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
@@ -26,11 +28,6 @@ public class Cliente {
         this.animais = new ArrayList<>();
     }
 
-    public Cliente(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-    
     public int getId() {
         return id;
     }
@@ -88,7 +85,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        String desc =  "Cliente{" + "nome=" + nome + ", endereco=" + endereco + ", telefone=" + telefone + ", cep=" + cep + ", email=" + email + '}';
+        String desc =  "Cliente{id="+ id + ", nome=" + nome + ", endereco=" + endereco + ", telefone=" + telefone + ", cep=" + cep + ", email=" + email + '}';
         String strAnimal = animais.toString();
         return desc + '\n' + strAnimal;
         
