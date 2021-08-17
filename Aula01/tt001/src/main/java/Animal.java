@@ -19,7 +19,7 @@ public class Animal {
     private int sexo;  // 0 - macho | 1 - femea
 
     public Animal(String nome, int idade, int sexo) {
-        id = count.incrementAndGet(); 
+        id = count.incrementAndGet();
         this.nome = nome;
         this.idade = idade;
         this.sexo = sexo;
