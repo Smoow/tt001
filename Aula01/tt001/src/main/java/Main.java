@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,12 +25,12 @@ public class Main {
         Animal a1 = new Animal("Ted", 4, 0);
         Animal a2 = new Animal("Tota", 2, 1);
         Animal a3 = new Animal("Toto", 12, 0);
-        Animal a4 = new Animal("Canarinho", 6, 1);
+        Animal a4 = new Animal(" ", 6, 1);
         
         c1.addAnimal(a1);
         c2.addAnimal(a2);
         c2.addAnimal(a3);
-        c3.addAnimal(a4);
+        
         
         c1.setNome("Pedro_2");
         
@@ -39,12 +40,16 @@ public class Main {
         clientes.add(c4);
         clientes.add(c5);
         
-         for (var i=0; i < clientes.size(); i++) {
-             System.out.println(clientes.get(i));
-             System.out.println("");
-         }
         
-//        System.out.println(c1);
-//        System.out.println(c2);
+        List<Animal> listaExterna = c1.getAnimais();
+        listaExterna.add(a4);
+        
+//         for (var i=0; i < clientes.size(); i++) {
+//             System.out.println(clientes.get(i));
+//             System.out.println("");
+//         }
+
+        System.out.println(c1);
+        System.out.println(listaExterna);
     }
 }
