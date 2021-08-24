@@ -31,7 +31,6 @@ public class Main {
         c2.addAnimal(a2);
         c2.addAnimal(a3);
         
-        
         c1.setNome("Pedro_2");
         
         clientes.add(c1);
@@ -40,16 +39,9 @@ public class Main {
         clientes.add(c4);
         clientes.add(c5);
         
-        
-        List<Animal> listaExterna = c1.getAnimais();
-        listaExterna.add(a4);
-        
-//         for (var i=0; i < clientes.size(); i++) {
-//             System.out.println(clientes.get(i));
-//             System.out.println("");
-//         }
-
-        System.out.println(c1);
-        System.out.println(listaExterna);
+         for (var i=0; i < clientes.size(); i++) {
+             System.out.println(clientes.get(i));
+             System.out.println("");
+         }
     }
 }
