@@ -7,11 +7,9 @@ package controller;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import model.Animal;
 import model.Cliente;
+import model.Veterinario;
 import view.GenericTableModel;
 
 /**
@@ -21,12 +19,18 @@ import view.GenericTableModel;
 public class Controller {
         private static Cliente clienteSelecionado = null;
         private static Animal animalSelecionado = null;
+        private static Veterinario veterinarioSelecionado = null;
         private static JTextField clienteSelecionadoTextField = null;
         private static JTextField animalSelecionadoTextField = null;
+        private static JTextField veterinarioSelecionadoTextField = null;
         
         public static void setTextFields(JTextField cliente, JTextField animal) {
             clienteSelecionadoTextField = cliente;
             animalSelecionadoTextField = animal;
+        }
+        
+        public static void setTextFieldVeterinario(JTextField veterinario) {
+            veterinarioSelecionadoTextField = veterinario;
         }
     
         public static void setTableModel(JTable table, GenericTableModel tableModel) {
@@ -41,6 +45,10 @@ public class Controller {
             return animalSelecionado;
         }
         
+        public static Veterinario getVeterinarioSelecionado() {
+            return veterinarioSelecionado;
+        }
+        
         public static void setSelected(Object selected) {
             if (selected instanceof Cliente) {
                 clienteSelecionado = (Cliente) selected;
@@ -49,6 +57,9 @@ public class Controller {
             } else if (selected instanceof Animal) {
                 animalSelecionado = (Animal) selected;
                 animalSelecionadoTextField.setText(animalSelecionado.getNome());
+            } else if (selected instanceof Veterinario) {
+                veterinarioSelecionado = (Veterinario) selected;
+                veterinarioSelecionadoTextField.setText(veterinarioSelecionado.getNome());
             }
         }
 }
