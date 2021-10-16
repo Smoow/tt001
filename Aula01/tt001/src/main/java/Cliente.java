@@ -8,8 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Smoow
  **/
 public class Cliente {
-    private static final AtomicInteger count = new AtomicInteger(0); 
-    private final int id;
+    private  int id;
     private String nome;
     private String endereco;
     private String telefone;
@@ -18,8 +17,8 @@ public class Cliente {
     
     private List<Animal> animais;
 
-    public Cliente(String nome, String endereco, String telefone, String cep, String email) {
-        id = count.incrementAndGet(); 
+    public Cliente(int id, String nome, String endereco, String telefone, String cep, String email) {
+        this.id = id;
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;

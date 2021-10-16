@@ -6,19 +6,17 @@
 package view;
 
 import java.util.List;
-import model.Animal;
-import model.AnimalDAO;
-import model.Especie;
-import model.EspecieDAO;
+import model.Veterinario;
+import model.VeterinarioDAO;
 
 /**
  *
  * @author Pedro Henrique Carreto Morais | RA: 186379 | p186379@dac.unicamp.br | TT001
  */
-public class AnimalTableModel extends GenericTableModel {
-
-    public AnimalTableModel(List vDados) {
-        super(vDados, new String[]{"Nome", "Idade", "Sexo", "Espécie"});
+public class VeterinarioTableModel extends GenericTableModel {
+    
+    public VeterinarioTableModel(List vDados) {
+        super(vDados, new String[]{"Nome", "Email", "Telefone"});
     }
 
     @Override
@@ -27,10 +25,8 @@ public class AnimalTableModel extends GenericTableModel {
             case 0:
                 return String.class;
             case 1:
-                return Integer.class;
-            case 2:
                 return String.class;
-            case 3:
+            case 2:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -39,23 +35,15 @@ public class AnimalTableModel extends GenericTableModel {
     
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Animal animal = (Animal) vDados.get(rowIndex);
+        Veterinario veterinario  = (Veterinario) vDados.get(rowIndex);
         
         switch (columnIndex) {
             case 0:
-                return animal.getNome();
+                return veterinario.getNome();
             case 1:
-                return animal.getIdade();
+                return veterinario.getEmail();
             case 2:
-                return animal.getSexo();
-            case 3:
-                Especie especie = EspecieDAO.getInstance().retrieveById(animal.getIdEspecie());
-                
-                if (especie != null) {
-                    return especie.getNome();
-                }
-                
-                return "";
+                return veterinario.getTelefone();
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
                     
@@ -64,32 +52,23 @@ public class AnimalTableModel extends GenericTableModel {
     
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Animal animal = (Animal) vDados.get(rowIndex);
+        Veterinario veterinario = (Veterinario) vDados.get(rowIndex);
         
         switch (columnIndex) {
             case 0:
-                animal.setNome((String) aValue);
+                veterinario.setNome((String) aValue);
                 break;
             case 1:
-                animal.setIdade((Integer) aValue);
+                veterinario.setEmail((String) aValue);
                 break;
             case 2:
-                animal.setSexo((char) aValue);
-                break;
-            case 3:
-                Especie especie = (Especie) EspecieDAO.getInstance().retrieveBySimilarName((String) aValue);
-                
-                if (especie == null) {
-                    especie = EspecieDAO.getInstance().create((String) aValue);
-                }
-                
-                animal.setIdEspecie(especie.getId());
+                veterinario.setTelefone((String) aValue);
                 break;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }
         
-        AnimalDAO.getInstance().update(animal);
+        VeterinarioDAO.getInstance().update(veterinario);
     }
     
     
@@ -97,4 +76,5 @@ public class AnimalTableModel extends GenericTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return true;
     }
+    
 }

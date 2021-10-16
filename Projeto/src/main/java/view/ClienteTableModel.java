@@ -11,7 +11,7 @@ import model.ClienteDAO;
 
 /**
  *
- * @author Smoow
+ * @author Pedro Henrique Carreto Morais | RA: 186379 | p186379@dac.unicamp.br | TT001
  */
 public class ClienteTableModel extends GenericTableModel {
 

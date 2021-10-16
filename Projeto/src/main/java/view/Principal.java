@@ -11,12 +11,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import model.AnimalDAO;
 import model.ClienteDAO;
+import model.EspecieDAO;
+import model.VeterinarioDAO;
 
 /**
  *
- * @author Smoow
+ * @author Pedro Henrique Carreto Morais | RA: 186379 | p186379@dac.unicamp.br | TT001
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -30,6 +36,7 @@ public class Principal extends javax.swing.JFrame {
         jTextField7.setText("");
         jTextField8.setText("");
         Controller.setTableModel(jTable2, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
+        Controller.setTableModel(jTable3, new VeterinarioTableModel(VeterinarioDAO.getInstance().retrieveAll()));
         jRadioButton2.setSelected(true);
         Controller.setTextFields(jTextField1, jTextField2);
     }
@@ -204,6 +211,11 @@ public class Principal extends javax.swing.JFrame {
         buttonGroup2.add(jRadioButton4);
         jRadioButton4.setFont(new java.awt.Font("Gadugi", 0, 16)); // NOI18N
         jRadioButton4.setText("Veterinários");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(jRadioButton3);
         jRadioButton3.setFont(new java.awt.Font("Gadugi", 0, 16)); // NOI18N
@@ -217,6 +229,11 @@ public class Principal extends javax.swing.JFrame {
         buttonGroup2.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Gadugi", 0, 16)); // NOI18N
         jRadioButton1.setText("Espécies");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Gadugi", 0, 16)); // NOI18N
         jButton1.setText("Novo");
@@ -392,6 +409,11 @@ public class Principal extends javax.swing.JFrame {
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
+            }
+        });
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField5KeyReleased(evt);
             }
         });
 
@@ -908,6 +930,17 @@ public class Principal extends javax.swing.JFrame {
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
         Controller.setSelected(((GenericTableModel) jTable2.getModel()).getItem(jTable2.getSelectedRow()));
     }//GEN-LAST:event_jTable2MousePressed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        Controller.setTableModel(jTable2, new EspeciesTableModel(EspecieDAO.getInstance().retrieveAll()));
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        Controller.setTableModel(jTable2, new VeterinarioTableModel(VeterinarioDAO.getInstance().retrieveAll()));
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
+    }//GEN-LAST:event_jTextField5KeyReleased
 
     /**
      * @param args the command line arguments

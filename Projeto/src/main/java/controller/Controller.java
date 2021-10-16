@@ -7,6 +7,9 @@ package controller;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import model.Animal;
 import model.Cliente;
 import view.GenericTableModel;
@@ -48,6 +51,4 @@ public class Controller {
                 animalSelecionadoTextField.setText(animalSelecionado.getNome());
             }
         }
-        
-        
 }
