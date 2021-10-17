@@ -261,6 +261,11 @@ public class Principal extends javax.swing.JFrame {
 
         jTextField4.setFont(new java.awt.Font("Gadugi", 0, 16)); // NOI18N
         jTextField4.setText("jTextField4");
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField4KeyPressed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -950,6 +955,11 @@ public class Principal extends javax.swing.JFrame {
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         Controller.setTableModel(jTable2, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
     }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed
+        // Enviando as informacoes da Table e TextField para a camada Controller fazer o filtro
+        Controller.filterTableData(jTable2, jTextField4);
+    }//GEN-LAST:event_jTextField4KeyPressed
 
     /**
      * @param args the command line arguments

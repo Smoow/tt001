@@ -7,6 +7,8 @@ package controller;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 import model.Animal;
 import model.Cliente;
 import model.Veterinario;
@@ -61,5 +63,13 @@ public class Controller {
                 veterinarioSelecionado = (Veterinario) selected;
                 veterinarioSelecionadoTextField.setText(veterinarioSelecionado.getNome());
             }
+        }
+        
+        // Função para filtrar algum registro através de um TextField em uma derterminada JTable
+        public static void filterTableData(JTable table, JTextField textField) {
+            GenericTableModel Model = (GenericTableModel) table.getModel(); 
+            TableRowSorter<GenericTableModel> tr = new TableRowSorter<GenericTableModel>(Model);
+            table.setRowSorter(tr);
+            tr.setRowFilter(RowFilter.regexFilter(textField.getText().trim()));
         }
 }
