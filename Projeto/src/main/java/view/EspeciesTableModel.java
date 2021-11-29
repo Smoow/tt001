@@ -15,15 +15,13 @@ import model.EspecieDAO;
  */
 public class EspeciesTableModel extends GenericTableModel {
     public EspeciesTableModel(List vDados) {
-        super(vDados, new String[]{"ID", "Nome"});
+        super(vDados, new String[]{"Nome"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return Integer.class;
-            case 1:
                 return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -36,8 +34,6 @@ public class EspeciesTableModel extends GenericTableModel {
         
         switch (columnIndex) {
             case 0:
-                return especie.getId();
-            case 1:
                 return especie.getNome();
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
@@ -51,9 +47,6 @@ public class EspeciesTableModel extends GenericTableModel {
         
         switch (columnIndex) {
             case 0:
-                especie.setId((Integer) aValue);
-                break;
-            case 1:
                 especie.setNome((String) aValue);
                 break;
             default:

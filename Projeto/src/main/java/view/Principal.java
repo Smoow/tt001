@@ -6,6 +6,7 @@
 package view;
 
 import controller.Controller;
+import static controller.Controller.jRadioButtonClientesSelecionado;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -933,27 +934,27 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        Controller.setTableModel(jTable2, new EspeciesTableModel(EspecieDAO.getInstance().retrieveAll()));
+        // Envia as informações para a camada Controller
+        Controller.jRadioButtonEspeciesSelecionado(jTable2);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     // Exibicao dos ANIMAIS
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        if (Controller.getClienteSelecionado() != null) {
-            Controller.setTableModel(jTable2, new AnimalTableModel(AnimalDAO.getInstance().retrieveByClientId(Controller.getClienteSelecionado().getId())));
-        } else {
-            Controller.setTableModel(jTable2, new AnimalTableModel(new ArrayList()));
+        // Envia as informações para a camada Controller
+        if (!Controller.jRadioButtonAnimaisSelecionado(jTable2)) {
             JOptionPane.showMessageDialog(this, "Selecione um cliente primeiro.");
         }
-
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        Controller.setTableModel(jTable2, new VeterinarioTableModel(VeterinarioDAO.getInstance().retrieveAll()));
+        // Envia as informações para a camada Controller
+        Controller.jRadioButtonVeterinariosSelecionado(jTable2);
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     // Exibicao dos CLIENTES
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        Controller.setTableModel(jTable2, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
+        // Envia as informações para a camada Controller
+        jRadioButtonClientesSelecionado(jTable2);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jTextField4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyPressed

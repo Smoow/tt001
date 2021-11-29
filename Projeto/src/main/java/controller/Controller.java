@@ -5,14 +5,23 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 import model.Animal;
+import model.AnimalDAO;
 import model.Cliente;
+import model.ClienteDAO;
+import model.EspecieDAO;
 import model.Veterinario;
+import model.VeterinarioDAO;
+import view.AnimalTableModel;
+import view.ClienteTableModel;
+import view.EspeciesTableModel;
 import view.GenericTableModel;
+import view.VeterinarioTableModel;
 
 /**
  *
@@ -71,5 +80,31 @@ public class Controller {
             TableRowSorter<GenericTableModel> tr = new TableRowSorter<GenericTableModel>(Model);
             table.setRowSorter(tr);
             tr.setRowFilter(RowFilter.regexFilter(textField.getText().trim()));
+        }
+        
+        // Função para dar retrieve all nos clientes quando o Radio Button dele estiver selecionado
+        public static void jRadioButtonClientesSelecionado(JTable table) {
+            setTableModel(table, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
+        }
+        
+        // Função para dar retrieve all nos animais de um cliente quando o Radio Button dele estiver selecionado
+        public static boolean jRadioButtonAnimaisSelecionado(JTable table) {
+            if (getClienteSelecionado() != null) {
+                setTableModel(table, new AnimalTableModel(AnimalDAO.getInstance().retrieveByClientId(Controller.getClienteSelecionado().getId())));
+                return true;
+            } else {
+                setTableModel(table, new AnimalTableModel(new ArrayList()));
+                return false;
+            }
+        }
+        
+        // Função para dar retrieve all nas espécies quando o Radio Button dele estiver selecionado
+        public static void jRadioButtonEspeciesSelecionado(JTable table) {
+            setTableModel(table, new EspeciesTableModel(EspecieDAO.getInstance().retrieveAll()));
+        }
+        
+        // Função para dar retrieve all nos veterinários quando o Radio Button dele estiver selecionado
+        public static void jRadioButtonVeterinariosSelecionado(JTable table) {
+            setTableModel(table, new VeterinarioTableModel(VeterinarioDAO.getInstance().retrieveAll()));
         }
 }
