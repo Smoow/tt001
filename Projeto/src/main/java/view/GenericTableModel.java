@@ -26,6 +26,7 @@ public abstract class GenericTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
+        if (vDados == null) return 0;
         return vDados.size();
     }
 

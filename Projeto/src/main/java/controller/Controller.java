@@ -6,6 +6,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -14,6 +15,7 @@ import model.Animal;
 import model.AnimalDAO;
 import model.Cliente;
 import model.ClienteDAO;
+import model.Especie;
 import model.EspecieDAO;
 import model.Veterinario;
 import model.VeterinarioDAO;
@@ -74,12 +76,19 @@ public class Controller {
             }
         }
         
-        // Função para filtrar algum registro através de um TextField em uma derterminada JTable
-        public static void filterTableData(JTable table, JTextField textField) {
-            GenericTableModel Model = (GenericTableModel) table.getModel(); 
-            TableRowSorter<GenericTableModel> tr = new TableRowSorter<GenericTableModel>(Model);
-            table.setRowSorter(tr);
-            tr.setRowFilter(RowFilter.regexFilter(textField.getText().trim()));
+        // Retrieve all clientes
+        public static List getAllClients() {
+            return ClienteDAO.getInstance().retrieveAll();
+        }
+        
+        // Retrieve all especies
+        public static List getAllSpecies() {
+            return EspecieDAO.getInstance().retrieveAll();
+        }
+        
+        // Retrieve all veterinarios
+        public static List getAllVets() {
+            return VeterinarioDAO.getInstance().retrieveAll();
         }
         
         // Função para dar retrieve all nos clientes quando o Radio Button dele estiver selecionado
@@ -106,5 +115,40 @@ public class Controller {
         // Função para dar retrieve all nos veterinários quando o Radio Button dele estiver selecionado
         public static void jRadioButtonVeterinariosSelecionado(JTable table) {
             setTableModel(table, new VeterinarioTableModel(VeterinarioDAO.getInstance().retrieveAll()));
+        }
+
+        // Função para o filtro de busca
+        public static void atualizaTableNomeSimilar(JTable table, String nomeSimilar) {
+            if (table.getModel() instanceof ClienteTableModel) {
+                ((GenericTableModel)table.getModel()).addListOfItems(ClienteDAO.getInstance().retrieveBySimilarName(nomeSimilar));
+            }
+            else if (table.getModel() instanceof VeterinarioTableModel) {
+                ((GenericTableModel)table.getModel()).addListOfItems(VeterinarioDAO.getInstance().retrieveBySimilarName(nomeSimilar));
+            }
+            /* Há um bug aqui... precisava dar uma olhada. Quando tenta filtrar no Animal ele crasha.
+            else if (table.getModel() instanceof AnimalTableModel) {
+                if (getClienteSelecionado() != null) {
+                    ((GenericTableModel)table.getModel()).addListOfItems(AnimalDAO.getInstance().retrieveBySimilarName(getClienteSelecionado().getId(), nomeSimilar));
+                }
+            } 
+            */
+            else if (table.getModel() instanceof EspeciesTableModel) {
+                ((GenericTableModel)table.getModel()).addListOfItems(EspecieDAO.getInstance().retrieveBySimilarName(nomeSimilar));
+            }
+        }
+        
+        // Função para adicionar itens ao banco
+        public static Cliente adicionaCliente(String nome, String endereco, String telefone, String cep, String email) {
+            return ClienteDAO.getInstance().create(nome, endereco, telefone, cep, email);
+        }
+        
+        // Função para adicionar itens ao banco
+        public static Veterinario adicionaVeterinario(String nome, String endereco, String email, String telefone) {
+            return VeterinarioDAO.getInstance().create(nome, endereco, email, telefone);
+        }
+        
+        // Função para adicionar itens ao banco
+        public static Especie adicionaEspecie(String nome) {
+            return EspecieDAO.getInstance().create(nome);
         }
 }
