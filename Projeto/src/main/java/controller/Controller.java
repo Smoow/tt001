@@ -125,13 +125,11 @@ public class Controller {
             else if (table.getModel() instanceof VeterinarioTableModel) {
                 ((GenericTableModel)table.getModel()).addListOfItems(VeterinarioDAO.getInstance().retrieveBySimilarName(nomeSimilar));
             }
-            /* Há um bug aqui... precisava dar uma olhada. Quando tenta filtrar no Animal ele crasha.
             else if (table.getModel() instanceof AnimalTableModel) {
                 if (getClienteSelecionado() != null) {
                     ((GenericTableModel)table.getModel()).addListOfItems(AnimalDAO.getInstance().retrieveBySimilarName(getClienteSelecionado().getId(), nomeSimilar));
                 }
             } 
-            */
             else if (table.getModel() instanceof EspeciesTableModel) {
                 ((GenericTableModel)table.getModel()).addListOfItems(EspecieDAO.getInstance().retrieveBySimilarName(nomeSimilar));
             }

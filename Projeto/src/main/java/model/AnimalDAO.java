@@ -63,6 +63,7 @@ public class AnimalDAO extends DAO {
     public List retrieve(String query) {
         List<Animal> animais = new ArrayList();
         ResultSet rs = getResultSet(query);
+        if (rs == null) return animais;
         try {
             while (rs.next()) {
                 animais.add(buildObject(rs));
@@ -97,7 +98,7 @@ public class AnimalDAO extends DAO {
 
     // RetrieveBySimilarName
     public List retrieveBySimilarName(int id, String nome) {
-        return this.retrieve("SELECT * FROM animal WHERE id_cliente = " + id + "AND nome LIKE '%" + nome + "%'");
+        return this.retrieve("SELECT * FROM animal WHERE id_cliente = " + id + " AND nome LIKE '%" + nome + "%'");
     }    
         
     // Update
