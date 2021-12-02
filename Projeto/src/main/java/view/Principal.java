@@ -411,6 +411,9 @@ public class Principal extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField5KeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
         });
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -852,15 +855,11 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // Limpa os registros da parte de veterinarios (botao TODOS)
-        if (jTable3.getModel() instanceof VeterinarioTableModel) {
-            ((GenericTableModel)jTable3.getModel()).addListOfItems(Controller.getAllVets());
-            jTextField5.setText("");
-        }
+        Controller.limpaFiltroBusca(jTable3, jTextField5);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
-        Controller.atualizaTableNomeSimilar(jTable3, jTextField5.getText());
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
@@ -908,32 +907,12 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // Limpar o filtro (botão TODOS)
-        if (jTable2.getModel() instanceof ClienteTableModel) {
-            ((GenericTableModel)jTable2.getModel()).addListOfItems(Controller.getAllClients());
-            jTextField4.setText("");
-        }
-        else if (jTable2.getModel() instanceof EspeciesTableModel) {
-            ((GenericTableModel)jTable2.getModel()).addListOfItems(Controller.getAllSpecies());
-            jTextField4.setText("");
-        }
-        else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            ((GenericTableModel)jTable2.getModel()).addListOfItems(Controller.getAllVets());
-            jTextField4.setText("");
-        }
-        
+        Controller.limpaFiltroBusca(jTable2, jTextField4);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Adicionar novos registros
-        if (jTable2.getModel() instanceof ClienteTableModel) {
-            ((GenericTableModel)jTable2.getModel()).addItem(Controller.adicionaCliente("", "", "", "", ""));
-        }
-        else if (jTable2.getModel() instanceof EspeciesTableModel) {
-            ((GenericTableModel)jTable2.getModel()).addItem(Controller.adicionaEspecie(""));
-        }
-        else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            ((GenericTableModel)jTable2.getModel()).addItem(Controller.adicionaVeterinario("", "", "", ""));
-        }
+        Controller.adicionarEntidade(jTable2);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -970,6 +949,11 @@ public class Principal extends javax.swing.JFrame {
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
         Controller.atualizaTableNomeSimilar(jTable2, jTextField4.getText());
     }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+        // TODO add your handling code here:
+        Controller.atualizaTableNomeSimilar(jTable3, jTextField5.getText());
+    }//GEN-LAST:event_jTextField5KeyTyped
 
     /**
      * @param args the command line arguments

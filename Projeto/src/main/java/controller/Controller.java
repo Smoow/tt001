@@ -135,18 +135,65 @@ public class Controller {
             }
         }
         
-        // Função para adicionar itens ao banco
+        // Função que executa o comportamento do botão TODOS - remover o filtro de busca
+        public static void limpaFiltroBusca(JTable table, JTextField textField) {
+            if (table.getModel() instanceof ClienteTableModel) {
+                ((GenericTableModel)table.getModel()).addListOfItems(Controller.getAllClients());
+                textField.setText("");
+            }
+            else if (table.getModel() instanceof AnimalTableModel) {
+                if (getClienteSelecionado() != null) {
+                    ((GenericTableModel)table.getModel()).addListOfItems(AnimalDAO.getInstance().retrieveByClientId(Controller.getClienteSelecionado().getId()));
+                    textField.setText("");
+                }
+            }
+            else if (table.getModel() instanceof EspeciesTableModel) {
+                ((GenericTableModel)table.getModel()).addListOfItems(Controller.getAllSpecies());
+                textField.setText("");
+            }
+            else if (table.getModel() instanceof VeterinarioTableModel) {
+                ((GenericTableModel)table.getModel()).addListOfItems(Controller.getAllVets());
+                textField.setText("");
+            }
+        }
+        
+        // Função para adicionar clientes ao banco
         public static Cliente adicionaCliente(String nome, String endereco, String telefone, String cep, String email) {
             return ClienteDAO.getInstance().create(nome, endereco, telefone, cep, email);
         }
         
-        // Função para adicionar itens ao banco
+        // Função para cadastrar animais ao banco
+        public static Animal adicionaAnimal(String nome, int idade, int sexo, int idEspecie, int idCliente) {
+            return AnimalDAO.getInstance().create(nome, idade, sexo, idEspecie, idCliente);
+        }
+        
+        // Função para adicionar veterinarios ao banco
         public static Veterinario adicionaVeterinario(String nome, String endereco, String email, String telefone) {
             return VeterinarioDAO.getInstance().create(nome, endereco, email, telefone);
         }
         
-        // Função para adicionar itens ao banco
+        // Função para adicionar especieis ao banco
         public static Especie adicionaEspecie(String nome) {
             return EspecieDAO.getInstance().create(nome);
+        }
+        
+        // Função genérica para o funcionamento do botão NOVO (das entidades)
+        public static void adicionarEntidade(JTable table) {
+            if (table.getModel() instanceof ClienteTableModel) {
+                ((GenericTableModel)table.getModel()).addItem(Controller.adicionaCliente("", "", "", "", ""));
+            }
+            /* Algum bug por aqui... 
+            else if (table.getModel() instanceof AnimalTableModel) {
+                if (getClienteSelecionado() != null) {
+                    ((GenericTableModel)table.getModel()).addItem(Controller.adicionaAnimal("", 0, 1, 0, getClienteSelecionado().getId()));
+                }
+            }
+            */
+            else if (table.getModel() instanceof EspeciesTableModel) {
+                ((GenericTableModel)table.getModel()).addItem(Controller.adicionaEspecie(""));
+            }
+            else if (table.getModel() instanceof VeterinarioTableModel) {
+                ((GenericTableModel)table.getModel()).addItem(Controller.adicionaVeterinario("", "", "", ""));
+            }
         }
 }
