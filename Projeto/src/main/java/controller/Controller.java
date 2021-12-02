@@ -196,4 +196,26 @@ public class Controller {
                 ((GenericTableModel)table.getModel()).addItem(Controller.adicionaVeterinario("", "", "", ""));
             }
         }
+        
+        // Função que apaga clientes do banco
+        public static void apagaCliente(Cliente cliente) {
+            List<Animal> animais = AnimalDAO.getInstance().retrieveByClientId(cliente.getId());
+            if (animais != null) {
+                for (Animal animal : animais) {
+                    AnimalDAO.getInstance().delete(animal);
+                }
+            }
+            
+            ClienteDAO.getInstance().delete(cliente);
+        }
+        
+        // Função que apaga animais do banco
+        public static void apagaAnimal(Animal animal) {
+            AnimalDAO.getInstance().delete(animal);
+        }
+        
+        // Função que apaga veterinarios do banco
+        public static void apagaVeterinario(Veterinario veterinario) {
+            VeterinarioDAO.getInstance().delete(veterinario);
+        }
 }

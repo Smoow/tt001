@@ -902,7 +902,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MousePressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // Apagar itens do banco de dados.
+        if (jTable2.getModel() instanceof ClienteTableModel) {
+            ((ClienteTableModel)jTable2.getModel()).removeItem(jTable2.getSelectedRow());
+            if (Controller.getClienteSelecionado() != null) {
+                Controller.apagaCliente(Controller.getClienteSelecionado());
+            }
+        }
+        if (jTable2.getModel() instanceof AnimalTableModel) {
+            ((AnimalTableModel)jTable2.getModel()).removeItem(jTable2.getSelectedRow());
+            Controller.apagaAnimal(Controller.getAnimalSelecionado());
+        }
+        if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            ((VeterinarioTableModel)jTable2.getModel()).removeItem(jTable2.getSelectedRow());
+            Controller.apagaVeterinario(Controller.getVeterinarioSelecionado());
+        }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
