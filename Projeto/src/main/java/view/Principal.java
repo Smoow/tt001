@@ -907,6 +907,7 @@ public class Principal extends javax.swing.JFrame {
             ((ClienteTableModel)jTable2.getModel()).removeItem(jTable2.getSelectedRow());
             if (Controller.getClienteSelecionado() != null) {
                 Controller.apagaCliente(Controller.getClienteSelecionado());
+                jTextField1.setText("");
             }
         }
         if (jTable2.getModel() instanceof AnimalTableModel) {
