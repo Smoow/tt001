@@ -56,6 +56,10 @@ public class Animal {
     public void setIdEspecie(int especie) {
         this.id_especie = especie;
     }
+    
+    public int getIdCliente() {
+        return id_cliente;
+    }
 
     @Override
     public String toString() {

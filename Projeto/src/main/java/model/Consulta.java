@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  */
 public class Consulta {
     private int id;
-    private Date data;
+    private Calendar data;
     private int hora;
     private String comentarios;
     private int idAnimal;
@@ -16,7 +17,7 @@ public class Consulta {
     private int idTratamento;
     private boolean terminou;
 
-    public Consulta(int id, Date data, int hora, String comentarios, int idAnimal, int idVet, int idTratamento, boolean terminou) {
+    public Consulta(int id, Calendar data, int hora, String comentarios, int idAnimal, int idVet, int idTratamento, boolean terminou) {
         this.id = id;
         this.data = data;
         this.hora = hora;
@@ -31,11 +32,11 @@ public class Consulta {
         return id;
     }
     
-    public Date getData() {
+    public Calendar getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(Calendar data) {
         this.data = data;
     }
 

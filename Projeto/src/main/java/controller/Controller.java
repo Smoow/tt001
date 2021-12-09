@@ -5,22 +5,28 @@
  */
 package controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 import model.Animal;
 import model.AnimalDAO;
 import model.Cliente;
 import model.ClienteDAO;
+import model.Consulta;
+import model.ConsultaDAO;
 import model.Especie;
 import model.EspecieDAO;
 import model.Veterinario;
 import model.VeterinarioDAO;
 import view.AnimalTableModel;
 import view.ClienteTableModel;
+import view.ConsultaTableModel;
 import view.EspeciesTableModel;
 import view.GenericTableModel;
 import view.VeterinarioTableModel;
@@ -89,6 +95,11 @@ public class Controller {
         // Retrieve all veterinarios
         public static List getAllVets() {
             return VeterinarioDAO.getInstance().retrieveAll();
+        }
+        
+        // Retrieve all consultas
+        public static List getAllConsultas() throws ParseException {
+            return ConsultaDAO.getInstance().retrieveAll();
         }
         
         // Função para dar retrieve all nos clientes quando o Radio Button dele estiver selecionado
@@ -177,10 +188,16 @@ public class Controller {
             return EspecieDAO.getInstance().create(nome);
         }
         
+        // Função para adicionar consultas ao banco
+        public static Consulta adicionaConsulta() throws ParseException {
+            return ConsultaDAO.getInstance().create(Calendar.getInstance(), 8, "", animalSelecionado.getId(), veterinarioSelecionado.getId(), 0, false);
+        }
+        
         // Função genérica para o funcionamento do botão NOVO (das entidades)
-        public static void adicionarEntidade(JTable table) {
+        public static boolean adicionarEntidade(JTable table) throws ParseException {
             if (table.getModel() instanceof ClienteTableModel) {
                 ((GenericTableModel)table.getModel()).addItem(Controller.adicionaCliente("", "", "", "", ""));
+                return true;
             }
             /* Algum bug por aqui... 
             else if (table.getModel() instanceof AnimalTableModel) {
@@ -190,11 +207,22 @@ public class Controller {
             }
             */
             else if (table.getModel() instanceof EspeciesTableModel) {
-                ((GenericTableModel)table.getModel()).addItem(Controller.adicionaEspecie(""));
+                ((GenericTableModel)table.getModel()).addItem(adicionaEspecie(""));
+                return true;
             }
             else if (table.getModel() instanceof VeterinarioTableModel) {
-                ((GenericTableModel)table.getModel()).addItem(Controller.adicionaVeterinario("", "", "", ""));
+                ((GenericTableModel)table.getModel()).addItem(adicionaVeterinario("", "", "", ""));
+                return true;
             }
+            else if (table.getModel() instanceof ConsultaTableModel) {
+                if ((clienteSelecionado!=null)&&(animalSelecionado!=null)&&(veterinarioSelecionado!=null)) {
+                    ((GenericTableModel) table.getModel()).addItem(adicionaConsulta());
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
         }
         
         // Função que apaga clientes do banco
@@ -217,5 +245,29 @@ public class Controller {
         // Função que apaga veterinarios do banco
         public static void apagaVeterinario(Veterinario veterinario) {
             VeterinarioDAO.getInstance().delete(veterinario);
+        }
+        
+        // Função que apaga consultas do banco
+        public static boolean apagaConsulta(JTable table) {
+            if (table.getSelectedRow() >= 0) {
+                Object item = ((GenericTableModel) table.getModel()).getItem(table.getSelectedRow());
+                ((GenericTableModel) table.getModel()).removeItem(table.getSelectedRow());
+                ConsultaDAO.getInstance().delete((Consulta) item);
+                return true;
+            }
+            return false;
+        }
+        
+        // Função para filtrar consultas
+        public static void filtraConsultas(JTable table, JToggleButton jtTodas, JToggleButton jtHoje, JToggleButton jtVet) throws ParseException {
+            if (table.getModel() instanceof ConsultaTableModel) {
+                String where = "";
+                if (!jtTodas.isSelected()) {
+                    where = "WHERE data >= date('now')";
+                }
+                
+                String query = "SELECT * FROM consulta " +where+ " ORDER BY data";
+                ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
+            }
         }
 }

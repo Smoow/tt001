@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,14 +32,13 @@ public class ConsultaDAO extends DAO {
     }
 
 // CRUD    
-    public Consulta create(Date data, int hora, String comentarios, int idAnimal, int idVet, int idTratamento, boolean terminou) throws ParseException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        
-        String maskData = dateFormat.format(data);
+    public Consulta create(Calendar data, int hora, String comentarios, int idAnimal, int idVet, int idTratamento, boolean terminou) throws ParseException {
         try {
+            java.util.Date dt = new Date(data.getTimeInMillis());
+            java.sql.Date d = new java.sql.Date(dt.getTime());
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO consulta (data, horario, comentario, id_animal, id_vet, id_tratamento, terminado) VALUES (?,?,?,?,?,?,?)");
-            stmt.setString(1, maskData);
+            stmt.setDate(1, d);
             stmt.setInt(2, hora);
             stmt.setString(3, comentarios);
             stmt.setInt(4, idAnimal);
@@ -55,9 +55,10 @@ public class ConsultaDAO extends DAO {
     private Consulta buildObject(ResultSet rs) throws ParseException {
         Consulta consulta = null;
         try {
-            String maskData = rs.getString("data");
-            Date data = new SimpleDateFormat("yyyy-mm-dd").parse(maskData);
-            consulta = new Consulta(rs.getInt("id"), data, rs.getInt("horario"), rs.getString("comentario"), rs.getInt("id_animal"), rs.getInt("id_vet"), rs.getInt("id_tratamento"), rs.getBoolean("terminado"));
+            Calendar dt = Calendar.getInstance();
+            dt.setTime(rs.getDate("data"));
+            
+            consulta = new Consulta(rs.getInt("id"), dt, rs.getInt("horario"), rs.getString("comentario"), rs.getInt("id_animal"), rs.getInt("id_vet"), rs.getInt("id_tratamento"), rs.getBoolean("terminado"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -80,7 +81,7 @@ public class ConsultaDAO extends DAO {
     
     // RetrieveAll
     public List retrieveAll() throws ParseException {
-        return this.retrieve("SELECT * FROM consulta");
+        return this.retrieve("SELECT * FROM consulta ORDER BY data");
     }
     
     // RetrieveLast
@@ -102,13 +103,11 @@ public class ConsultaDAO extends DAO {
     // Update
     public void update(Consulta consulta) {
         try {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        
-            String maskData = dateFormat.format(consulta.getData());
-            
+            java.util.Date dt = new Date(consulta.getData().getTimeInMillis());
+            java.sql.Date d = new java.sql.Date(dt.getTime());
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE consulta SET data=?, horario=?, comentario=?, id_animal=?, id_vet=?, id_tratamento=?, terminado=?  WHERE id=?");
-            stmt.setString(1, maskData);
+            stmt.setDate(1, d);
             stmt.setInt(2, consulta.getHora());
             stmt.setString(3, consulta.getComentarios());
             stmt.setInt(4, consulta.getIdAnimal());

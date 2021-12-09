@@ -86,6 +86,12 @@ public class EspecieDAO extends DAO {
         List<Especie> especies = this.retrieve("SELECT * FROM especie WHERE id = " + id);
         return (especies.isEmpty() ? null : especies.get(0));
     }
+    
+    // RetrieveByName
+    public Especie retrieveByName(String nome) {
+        List<Especie> especies = this.retrieve("SELECT * FROM especie WHERE nome = '" + nome + "'");
+        return (especies.isEmpty() ? null : especies.get(0));
+    }  
 
     // RetrieveBySimilarName
     public List retrieveBySimilarName(String nome) {
