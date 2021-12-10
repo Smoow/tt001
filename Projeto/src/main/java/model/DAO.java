@@ -89,7 +89,7 @@ public abstract class DAO {
                     + "id INTEGER PRIMARY KEY, \n"
                     + "nome VARCHAR, \n"
                     + "idade INTEGER, \n"
-                    + "sexo INTEGER, \n"
+                    + "sexo VARCHAR, \n"
                     + "id_especie INTEGER, \n"
                     + "id_cliente INTEGER); \n");
             executeUpdate(stmt);

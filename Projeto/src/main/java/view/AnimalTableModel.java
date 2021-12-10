@@ -55,7 +55,7 @@ public class AnimalTableModel extends GenericTableModel {
                     return especie.getNome();
                 }
                 
-                return "";
+                return "Não identificada";
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
                     
@@ -74,16 +74,17 @@ public class AnimalTableModel extends GenericTableModel {
                 animal.setIdade((Integer) aValue);
                 break;
             case 2:
-                animal.setSexo((char) aValue);
+                animal.setSexo((String) aValue);
                 break;
             case 3:
-                Especie especie = (Especie) EspecieDAO.getInstance().retrieveBySimilarName((String) aValue);
+                List<Especie> especies = EspecieDAO.getInstance().retrieveBySimilarName((String) aValue);
+                Especie especieCriada = null;
                 
-                if (especie == null) {
-                    especie = EspecieDAO.getInstance().create((String) aValue);
+                if (especies.isEmpty()) {
+                    especieCriada = EspecieDAO.getInstance().create((String) aValue);
                 }
                 
-                animal.setIdEspecie(especie.getId());
+                animal.setIdEspecie((Integer) (especies.get(0)).getId());
                 break;
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");

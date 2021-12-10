@@ -25,13 +25,13 @@ public class AnimalDAO extends DAO {
     }
 
 // CRUD    
-    public Animal create(String nome, int idade, int sexo, int idEspecie, int idCliente) {
+    public Animal create(String nome, int idade, String sexo, int idEspecie, int idCliente) {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO animal (nome, idade, sexo, id_especie, id_cliente) VALUES (?, ?, ?, ?, ?)");
             stmt.setString(1, nome);
             stmt.setInt(2, idade);
-            stmt.setInt(3, sexo);
+            stmt.setString(3, sexo);
             stmt.setInt(4, idEspecie);
             stmt.setInt(5, idCliente);
             executeUpdate(stmt);
@@ -52,7 +52,7 @@ public class AnimalDAO extends DAO {
     private Animal buildObject(ResultSet rs) {
         Animal animal = null;
         try {
-            animal = new Animal(rs.getInt("id"), rs.getString("nome"), rs.getInt("idade"), rs.getInt("sexo"), rs.getInt("id_especie"), rs.getInt("id_cliente"));
+            animal = new Animal(rs.getInt("id"), rs.getString("nome"), rs.getInt("idade"), rs.getString("sexo"), rs.getInt("id_especie"), rs.getInt("id_cliente"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -105,11 +105,12 @@ public class AnimalDAO extends DAO {
     public void update(Animal animal) {
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE animal SET nome=?, idade=?, sexo=? WHERE id=?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE animal SET nome=?, idade=?, id_especie=?, sexo=? WHERE id=?");
             stmt.setString(1, animal.getNome());
             stmt.setInt(2, animal.getIdade());
-            stmt.setInt(3, animal.getSexo());
-            stmt.setInt(4, animal.getId());
+            stmt.setInt(3, animal.getIdEspecie());
+            stmt.setString(4, animal.getSexo());
+            stmt.setInt(5, animal.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());

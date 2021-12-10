@@ -7,22 +7,10 @@ package view;
 
 import controller.Controller;
 import static controller.Controller.jRadioButtonClientesSelecionado;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.RowSorter;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import model.AnimalDAO;
-import model.ClienteDAO;
-import model.EspecieDAO;
-import model.VeterinarioDAO;
 
 /**
  *

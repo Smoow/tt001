@@ -174,7 +174,7 @@ public class Controller {
         }
         
         // Função para cadastrar animais ao banco
-        public static Animal adicionaAnimal(String nome, int idade, int sexo, int idEspecie, int idCliente) {
+        public static Animal adicionaAnimal(String nome, int idade, String sexo, int idEspecie, int idCliente) {
             return AnimalDAO.getInstance().create(nome, idade, sexo, idEspecie, idCliente);
         }
         
@@ -199,13 +199,11 @@ public class Controller {
                 ((GenericTableModel)table.getModel()).addItem(Controller.adicionaCliente("", "", "", "", ""));
                 return true;
             }
-            /* Algum bug por aqui... 
             else if (table.getModel() instanceof AnimalTableModel) {
                 if (getClienteSelecionado() != null) {
-                    ((GenericTableModel)table.getModel()).addItem(Controller.adicionaAnimal("", 0, 1, 0, getClienteSelecionado().getId()));
+                    ((GenericTableModel)table.getModel()).addItem(Controller.adicionaAnimal("", 0, "Macho", 0, getClienteSelecionado().getId()));
                 }
             }
-            */
             else if (table.getModel() instanceof EspeciesTableModel) {
                 ((GenericTableModel)table.getModel()).addItem(adicionaEspecie(""));
                 return true;
