@@ -114,6 +114,7 @@ public class ConsultaDAO extends DAO {
             stmt.setInt(5, consulta.getIdVet());
             stmt.setInt(6, consulta.getIdTratamento());
             stmt.setBoolean(7, consulta.isTerminou());
+            stmt.setInt(8, consulta.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());

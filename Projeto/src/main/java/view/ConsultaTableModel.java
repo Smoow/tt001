@@ -64,10 +64,14 @@ public class ConsultaTableModel extends GenericTableModel {
                 return consulta.getHora();
             case 2:
                 animal = AnimalDAO.getInstance().retrieveById(consulta.getIdAnimal());
-                return ClienteDAO.getInstance().retrieveById(animal.getIdCliente()).getNome();
+                if (animal != null) {
+                    return ClienteDAO.getInstance().retrieveById(animal.getIdCliente()).getNome();
+                }
             case 3:
                 animal = AnimalDAO.getInstance().retrieveById(consulta.getIdAnimal());
-                return animal.getNome();
+                if (animal != null) {
+                    return animal.getNome();
+                }
             case 4:
                 return VeterinarioDAO.getInstance().retrieveById(consulta.getIdVet()).getNome();
             case 5:
@@ -76,7 +80,6 @@ public class ConsultaTableModel extends GenericTableModel {
                 return consulta.isTerminou();
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
-                    
         }
     }
     
