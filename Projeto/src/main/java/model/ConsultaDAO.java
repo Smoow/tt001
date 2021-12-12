@@ -69,12 +69,14 @@ public class ConsultaDAO extends DAO {
     public List retrieve(String query) throws ParseException {
         List<Consulta> consultas = new ArrayList();
         ResultSet rs = getResultSet(query);
-        try {
-            while (rs.next()) {
-                consultas.add(buildObject(rs));
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    consultas.add(buildObject(rs));
+                }
+            } catch (SQLException e) {
+                System.err.println("Exception: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.err.println("Exception: " + e.getMessage());
         }
         return consultas;
     }

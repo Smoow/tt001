@@ -260,8 +260,21 @@ public class Controller {
         public static void filtraConsultas(JTable table, JToggleButton jtTodas, JToggleButton jtHoje, JToggleButton jtVet) throws ParseException {
             if (table.getModel() instanceof ConsultaTableModel) {
                 String where = "";
+                int flag = 1;
+                
                 if (!jtTodas.isSelected()) {
                     where = "WHERE data >= date('now')";
+                    flag = 0;
+                }
+                
+                if (jtHoje.isSelected()) {
+                    where = "WHERE date(datetime(data / 1000 , 'unixepoch')) = date('now')";
+                    flag = 0;
+                }
+
+                if ((jtVet.isSelected()) && (flag == 1)) {
+                    where = "WHERE id_vet = " + veterinarioSelecionado.getId() + " ";
+                    flag = 0;
                 }
                 
                 String query = "SELECT * FROM consulta " +where+ " ORDER BY data";
