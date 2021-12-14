@@ -12,8 +12,6 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.RowFilter;
-import javax.swing.table.TableRowSorter;
 import model.Animal;
 import model.AnimalDAO;
 import model.Cliente;
